@@ -57,10 +57,9 @@ const Footer = () => (
 
 const CreateNew = (props) => {
   const history = useHistory()
-  const contentField = useField("text")
-  const authorField = useField("text")
-  const infoField = useField("text")
-
+  const { reset: resetContent, ...contentField } = useField("text")
+  const { reset: resetAuthor, ...authorField } = useField("text")
+  const { reset: resetInfo, ...infoField } = useField("text")
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -72,6 +71,13 @@ const CreateNew = (props) => {
     })
     history.push('/')
     props.setNotification(contentField.value)
+  }
+
+  const onReset = (e) => {
+    e.preventDefault()
+    resetContent()
+    resetAuthor()
+    resetInfo()
   }
 
   return (
@@ -90,7 +96,7 @@ const CreateNew = (props) => {
           url for more info
           <input name='info'{...infoField} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button><button onClick={onReset}>reset</button>
       </form>
     </div>
   )
